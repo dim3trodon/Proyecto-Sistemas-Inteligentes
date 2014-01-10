@@ -14,6 +14,8 @@ import javax.speech.recognition.ResultEvent;
 
 public class Escucha extends ResultAdapter {
   
+  public static final String gramatica = "gramaticas/SimpleGrammarES2.txt";
+  
   public Escucha() {
     super();
     // TODO Poner aquí el main del ejemplo de JSapi
