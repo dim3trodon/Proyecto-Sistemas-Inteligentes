@@ -29,14 +29,11 @@ public class Control {
   
   public void ejecutarComando(String comando) {
     // TODO
-    // Si es un comando que necesita una secuencia de teclas para ejecutarse:
     // Llamar a la clase ListaComandos, donde se encuentran todos los comandos
     // que se pueden ejecutar en el programa, y ejecutar el método 
-    // buscar(String): Comb_Teclas, que recibe un comando y devuelve una
-    // secuencia de teclas que se ejecuta en este método
-    
-    // Si no (ejemplo, abrir Chrome, abrir notepad)
-    // Ejecutar directamente aquí el comando por consola
+    // buscar(String): Accion, que recibe un comando y devuelve una
+    // Accion que puede ser la ejecución de un comando en la terminal o 
+    // de una combinación de teclas
     System.out.println("ejecutarComando " + comando);
   }
   

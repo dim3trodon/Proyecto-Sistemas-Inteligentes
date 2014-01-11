@@ -10,28 +10,26 @@
  * (CombTeclas)
  * 
  */
-
-//TODO En vez de String, CombTeclas, hacer String, Accion. En Accion se puede
-// llamar a un programa en la shell o ejecutar unas combinaciones de teclas
 package es.ull.etsii.sistemasInteligentes.proyectoFinal;
 
 import java.util.HashMap;
 
+import es.ull.etsii.sistemasInteligentes.proyectoFinal.accion.Accion;
+
 public class ListaComandos {
-  private HashMap<String, CombTeclas> hashComandos;
+  private HashMap<String, Accion> hashComandos;
   
   public CombTeclas buscar(String comando) {
     // TODO
-    // Busca el comando en el hash y devuelve la combinación de teclas 
-    // asociada
+    // Busca el comando en el hash y devuelve acción asociada
     return null;
   }
 
-  private HashMap<String, CombTeclas> getHashComandos() {
+  private HashMap<String, Accion> getHashComandos() {
     return hashComandos;
   }
 
-  private void setHashComandos(HashMap<String, CombTeclas> hashComandos) {
+  private void setHashComandos(HashMap<String, Accion> hashComandos) {
     this.hashComandos = hashComandos;
   }
 }

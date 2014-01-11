@@ -17,8 +17,26 @@ import java.util.Vector;
 public class CombTeclas {
   private Vector<Integer> keyEvents;
   
-  // TODO addTecla para construir el objeto
-
+  public CombTeclas() {
+    setKeyEvents(new Vector<Integer>());
+  }
+  
+  public CombTeclas(Vector<Integer> keyEvents) {
+    setKeyEvents(keyEvents);
+  }
+  
+  public int getNumKeyEvents() {
+    return getKeyEvents().size();
+  }
+  
+  public int getKeyEvent(int i) {
+    return getKeyEvents().get(i);
+  }
+  
+  public void addKeyEvent(int keyEvent) {
+    getKeyEvents().add(keyEvent);
+  }
+  
   private Vector<Integer> getKeyEvents() {
     return keyEvents;
   }
