@@ -11,17 +11,23 @@ package es.ull.etsii.sistemasInteligentes.proyectoFinal;
 
 public class Control {
   
-  void iniciarEscucha() {
-    // TODO
-    // Llamar a la clase Escucha y ejecutar el método escuchar(), que devuelve
-    // un String. Ese String pasárselo a ejecutarComando(String)
+  private Escucha escucha;
+  
+  public Control() {
+    // Se le pasa a Escucha la referencia a Control para que Escucha pueda
+    // llamar a Control
+    setEscucha(new Escucha(this));
   }
   
-  void pararEscucha() {
-    // TODO
+  public void iniciarEscucha() {
+    getEscucha().iniciar();
   }
   
-  void ejecutarComando(String comando) {
+  public void pararEscucha() {
+    getEscucha().parar();
+  }
+  
+  public void ejecutarComando(String comando) {
     // TODO
     // Si es un comando que necesita una secuencia de teclas para ejecutarse:
     // Llamar a la clase ListaComandos, donde se encuentran todos los comandos
@@ -31,6 +37,15 @@ public class Control {
     
     // Si no (ejemplo, abrir Chrome, abrir notepad)
     // Ejecutar directamente aquí el comando por consola
+    System.out.println("ejecutarComando " + comando);
+  }
+  
+  private void setEscucha(Escucha escucha) {
+    this.escucha = escucha;
+  }
+
+  private Escucha getEscucha() {
+    return escucha;
   }
 
   /**
@@ -38,7 +53,9 @@ public class Control {
    */
   public static void main(String[] args) {
     // TODO Auto-generated method stub
-
+    Control control = new Control();
+    control.iniciarEscucha();
+    control.pararEscucha();
   }
 
 }

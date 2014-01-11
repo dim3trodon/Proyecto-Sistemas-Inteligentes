@@ -10,6 +10,9 @@
  * (CombTeclas)
  * 
  */
+
+//TODO En vez de String, CombTeclas, hacer String, Accion. En Accion se puede
+// llamar a un programa en la shell o ejecutar unas combinaciones de teclas
 package es.ull.etsii.sistemasInteligentes.proyectoFinal;
 
 import java.util.HashMap;

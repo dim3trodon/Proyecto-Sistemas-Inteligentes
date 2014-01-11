@@ -9,31 +9,92 @@
  */
 package es.ull.etsii.sistemasInteligentes.proyectoFinal;
 
+import java.io.FileNotFoundException;
+import java.io.FileReader;
+import java.util.Locale;
+
+import javax.speech.Central;
+import javax.speech.EngineModeDesc;
+import javax.speech.recognition.Recognizer;
+import javax.speech.recognition.Result;
 import javax.speech.recognition.ResultAdapter;
 import javax.speech.recognition.ResultEvent;
+import javax.speech.recognition.ResultToken;
+import javax.speech.recognition.RuleGrammar;
 
 public class Escucha extends ResultAdapter {
   
-  public static final String gramatica = "gramaticas/SimpleGrammarES2.txt";
+  public static final String GRAMATICA = "gramaticas/SimpleGrammarES2.txt";
   
-  public Escucha() {
+  private Recognizer recognizer;
+  private Control refControl;
+  
+  public Escucha(Control refControl) {
     super();
-    // TODO Poner aquí el main del ejemplo de JSapi
+    setRefControl(refControl);
+    // main del ejemplo de JSapi
+    try {
+      setRecognizer(Central.createRecognizer(new EngineModeDesc(Locale.ROOT)));
+      getRecognizer().allocate();
+      FileReader grammar1 = new FileReader(GRAMATICA);
+      RuleGrammar rg = getRecognizer().loadJSGF(grammar1);
+      rg.setEnabled(true);
+      getRecognizer().addResultListener(this);
+    } catch (FileNotFoundException e) {
+      System.err.println("No se ha encontrado " + GRAMATICA);
+    } catch (Exception e) {
+      System.err.println("Ha ocurrido un error en el constructor de Escucha");
+      e.printStackTrace();
+      System.exit(0);
+    }
+  }
+
+  public void iniciar() {
+    try {
+      System.out.println("Empieze Dictado");
+      getRecognizer().commitChanges();
+
+      getRecognizer().requestFocus();
+      getRecognizer().resume();
+    } catch (Exception e) {
+      System.err.println("Ha ocurrido un error en iniciar() de Escucha");
+      e.printStackTrace();
+      System.exit(0);
+    }
   }
   
-  public String escuchar() {
-    // TODO
-    // Este método llama a resultAccepted y devuelve la palabra reconocida
-    // como un String
-    return null;
+  public void parar() {
+    getRecognizer().pause();
   }
   
   @Override
-  /**
-   * No llamar a este método directamente
-   */
   public void resultAccepted(ResultEvent re) {
-    // TODO
+    try {
+      Result res = (Result) (re.getSource());
+      ResultToken tokens[] = res.getBestTokens();
+      for (int i = 0; i < tokens.length; i++) {
+        getRefControl().ejecutarComando(tokens[i].getSpokenText());
+      }
+    } catch (Exception ex) {
+      System.out.println("Ha ocurrido algo inesperado " + ex);
+    }
+  }
+
+  private Recognizer getRecognizer() {
+    return recognizer;
+  }
+
+  private void setRecognizer(Recognizer recognizer) {
+    this.recognizer = recognizer;
+  }
+  
+  private Control getRefControl() {
+    return refControl;
+  }
+
+
+  private void setRefControl(Control refControl) {
+    this.refControl = refControl;
   }
 
 }
