@@ -15,14 +15,26 @@ package es.ull.etsii.sistemasInteligentes.proyectoFinal;
 import java.util.HashMap;
 
 import es.ull.etsii.sistemasInteligentes.proyectoFinal.accion.Accion;
+import es.ull.etsii.sistemasInteligentes.proyectoFinal.accion.AccionScript;
 
 public class ListaComandos {
   private HashMap<String, Accion> hashComandos;
   
-  public CombTeclas buscar(String comando) {
-    // TODO
-    // Busca el comando en el hash y devuelve acción asociada
-    return null;
+  public ListaComandos() {
+    setHashComandos(new HashMap<String, Accion>());
+  }
+  
+  public Accion buscar(String comando) {
+    if (getHashComandos().containsKey(comando))
+      return getHashComandos().get(comando);
+    else {
+      System.err.println(comando + " no es un comando en ListaComandos");
+      return new AccionScript("echo " + comando + " no es un comando");
+    }
+  }
+  
+  public void addEntrada(String comando, Accion accion) {
+    getHashComandos().put(comando, accion);
   }
 
   private HashMap<String, Accion> getHashComandos() {

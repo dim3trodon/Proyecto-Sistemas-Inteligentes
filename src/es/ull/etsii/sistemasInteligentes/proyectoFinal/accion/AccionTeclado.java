@@ -12,7 +12,6 @@ package es.ull.etsii.sistemasInteligentes.proyectoFinal.accion;
 import java.awt.AWTException;
 import java.awt.Robot;
 
-import es.ull.etsii.sistemasInteligentes.proyectoFinal.CombTeclas;
 
 public class AccionTeclado implements Accion {
   
@@ -31,7 +30,7 @@ public class AccionTeclado implements Accion {
         robot.keyPress(getKeyEvent(i));
       }
     } catch (AWTException e) {
-      System.err.println("Error de Robot");
+      System.err.println("Error de Robot en AccionTeclado");
       e.printStackTrace();
     }
     

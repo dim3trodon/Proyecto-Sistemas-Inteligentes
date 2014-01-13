@@ -10,7 +10,7 @@
  * teclado.
  * 
  */
-package es.ull.etsii.sistemasInteligentes.proyectoFinal;
+package es.ull.etsii.sistemasInteligentes.proyectoFinal.accion;
 
 import java.util.Vector;
 

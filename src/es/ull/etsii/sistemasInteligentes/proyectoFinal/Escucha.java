@@ -24,7 +24,7 @@ import javax.speech.recognition.RuleGrammar;
 
 public class Escucha extends ResultAdapter {
   
-  public static final String GRAMATICA = "gramaticas/SimpleGrammarES2.txt";
+  public static final String GRAMATICA = "gramaticas/gramatica.txt";
   
   private Recognizer recognizer;
   private Control refControl;
@@ -41,7 +41,7 @@ public class Escucha extends ResultAdapter {
       rg.setEnabled(true);
       getRecognizer().addResultListener(this);
     } catch (FileNotFoundException e) {
-      System.err.println("No se ha encontrado " + GRAMATICA);
+      System.err.println("No se ha encontrado " + GRAMATICA + " en Escucha");
     } catch (Exception e) {
       System.err.println("Ha ocurrido un error en el constructor de Escucha");
       e.printStackTrace();
@@ -72,11 +72,19 @@ public class Escucha extends ResultAdapter {
     try {
       Result res = (Result) (re.getSource());
       ResultToken tokens[] = res.getBestTokens();
+      String comando = "";
       for (int i = 0; i < tokens.length; i++) {
-        getRefControl().ejecutarComando(tokens[i].getSpokenText());
+        if(i > 0)
+          comando += " ";
+        comando += tokens[i].getSpokenText();
       }
+      getRefControl().ejecutarComando(comando);
+      //TODO
+      parar();
     } catch (Exception ex) {
-      System.out.println("Ha ocurrido algo inesperado " + ex);
+      System.out
+          .println("Ha ocurrido algo inesperado en resultAccepted() de Escucha "
+              + ex);
     }
   }
 
