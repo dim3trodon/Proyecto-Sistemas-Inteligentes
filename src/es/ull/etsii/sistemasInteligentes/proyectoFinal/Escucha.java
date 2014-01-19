@@ -79,8 +79,7 @@ public class Escucha extends ResultAdapter {
         comando += tokens[i].getSpokenText();
       }
       getRefControl().ejecutarComando(comando);
-      //TODO
-      parar();
+      //parar();
     } catch (Exception ex) {
       System.out
           .println("Ha ocurrido algo inesperado en resultAccepted() de Escucha "

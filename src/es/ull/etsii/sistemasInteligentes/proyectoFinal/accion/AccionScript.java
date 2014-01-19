@@ -23,18 +23,19 @@ public class AccionScript implements Accion {
   public void ejecutar() {
     // TODO Auto-generated method stub
     try {
-      String os = System.getProperty("os.name");
-      if(os.matches("\\s*Windows\\s*")) {
-        String comando = "scripts/" + getNombreScript();
-        Runtime.getRuntime().exec(comando);
-      } else {
-        // TODO Versión para Linux
-      }
+      String comando = "scripts/" + getNombreScript();
+      System.out.println("En terminal " + comando);
+      Runtime.getRuntime().exec(comando);
     } catch (IOException e) {
-      System.err.println("Error al ejecutar \"" + getNombreScript() + 
-          "\" en AccionTerminal");
+      System.err.println("Error al ejecutar \"" + getNombreScript()
+          + "\" en AccionTerminal");
       e.printStackTrace();
     }
+  }
+
+  @Override
+  public String toString() {
+    return "AccionScript " + getNombreScript();
   }
 
   private String getNombreScript() {

@@ -9,19 +9,20 @@
  */
 package es.ull.etsii.sistemasInteligentes.proyectoFinal;
 
-import es.ull.etsii.sistemasInteligentes.proyectoFinal.accion.AccionScript;
 
 public class Control {
   
   private Escucha escucha;
   private ListaComandos listaComandos;
+  private boolean chromeAbierto;
+  private int numeroVentanasAbiertas;
   
   public Control() {
     // Se le pasa a Escucha la referencia a Control para que Escucha pueda
     // llamar a Control
     setEscucha(new Escucha(this));
     setListaComandos(ConstructorListaComandosWindows.crearListaComandos());
-    
+//    setChromeAbierto(true);
   }
   
   public void iniciarEscucha() {
@@ -40,7 +41,24 @@ public class Control {
     // Accion que puede ser la ejecución de un script o 
     // de una combinación de teclas
     System.out.println("Ejecutar comando " + comando);
-    getListaComandos().buscar(comando).ejecutar();
+    if(comando.matches("\\s*abrir\\s*chrome\\s*") && (!isChromeAbierto())) {
+      setChromeAbierto(true);
+      getListaComandos().buscar(comando).ejecutar();
+    } else if(isChromeAbierto()) {
+      if(comando.matches("\\s*nueva\\s*ventana\\s*")) {
+        aumentarNumeroVentanasAbiertas();
+      }
+      else if(comando.matches("\\s*cerrar\\s*ventana\\s*")) {
+        reducirNumeroVentanasAbiertas();
+        if(getNumeroVentanasAbiertas() <= 0)
+          setChromeAbierto(false);
+      }
+      getListaComandos().buscar(comando).ejecutar();
+    } else {
+      System.err.println("Chrome no está abierto");
+    }
+    
+    iniciarEscucha();
   }
   
   private void setEscucha(Escucha escucha) {
@@ -57,6 +75,30 @@ public class Control {
 
   private void setListaComandos(ListaComandos listaComandos) {
     this.listaComandos = listaComandos;
+  }
+
+  private boolean isChromeAbierto() {
+    return chromeAbierto;
+  }
+
+  private void setChromeAbierto(boolean chromeAbierto) {
+    this.chromeAbierto = chromeAbierto;
+  }
+  
+  private void aumentarNumeroVentanasAbiertas() {
+    setNumeroVentanasAbiertas(getNumeroVentanasAbiertas() + 1);
+  }
+  
+  private void reducirNumeroVentanasAbiertas() {
+    setNumeroVentanasAbiertas(getNumeroVentanasAbiertas() - 1);
+  }
+
+  private int getNumeroVentanasAbiertas() {
+    return numeroVentanasAbiertas;
+  }
+
+  private void setNumeroVentanasAbiertas(int numeroVentanasAbiertas) {
+    this.numeroVentanasAbiertas = numeroVentanasAbiertas;
   }
 
   /**

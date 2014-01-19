@@ -11,6 +11,7 @@ package es.ull.etsii.sistemasInteligentes.proyectoFinal.accion;
 
 import java.awt.AWTException;
 import java.awt.Robot;
+import java.awt.event.KeyEvent;
 
 
 public class AccionTeclado implements Accion {
@@ -29,6 +30,13 @@ public class AccionTeclado implements Accion {
       for(int i = 0; i < getNumKeyEvents(); i++) {
         robot.keyPress(getKeyEvent(i));
       }
+      /*for(int i = getNumKeyEvents() - 1; i > 0;  i--) {
+        robot.keyRelease(getKeyEvent(i));
+      }*/
+      robot.keyRelease(KeyEvent.VK_CONTROL);
+      robot.keyRelease(KeyEvent.VK_SHIFT);
+      robot.keyRelease(KeyEvent.VK_ALT);
+      robot.keyRelease(KeyEvent.VK_WINDOWS);
     } catch (AWTException e) {
       System.err.println("Error de Robot en AccionTeclado");
       e.printStackTrace();

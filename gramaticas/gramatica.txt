@@ -3,6 +3,39 @@ grammar sentence;
  
 public <sentence> =
 [<dato0>]
+[<dato1>]
+[<dato2>]
+[<dato3>]
+[<dato4>]
+[<dato6>][<dato5>]
+[<dato7>]
+[<dato8>]
+[<dato9>]
+[<dato10>]
+[<dato11>]
+[<dato12>]
+[<dato13>]
+[<dato14>]
+[<dato15>]
+[<dato17>]
+[<dato18>]
 ;
  
 <dato0>=abrir chrome;
+<dato1>=abrir nueva ventana;
+<dato2>=nuevo tab;
+<dato3>=nueva ventana incognito;
+<dato4>=abrir ultimo tab cerrado;
+<dato5>=1 | 2 | 3 | 4 | 5 | 6 | 7 | 8;
+<dato6>=ir al tab;
+<dato7>=ir al ultimo tab;
+<dato8>=siguiente tab;
+<dato9>=tab siguiente;
+<dato10>=anterior tab;
+<dato11>=tab anterior;
+<dato12>=cerrar ventana;
+<dato13>=cerrar tab;
+<dato14>=retroceder;
+<dato15>=pagina siguiente;
+<dato17>=tab anterior;
+<dato18>=configuracion

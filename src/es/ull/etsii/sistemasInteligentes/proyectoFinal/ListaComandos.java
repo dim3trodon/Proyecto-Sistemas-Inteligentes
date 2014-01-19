@@ -25,11 +25,15 @@ public class ListaComandos {
   }
   
   public Accion buscar(String comando) {
-    if (getHashComandos().containsKey(comando))
+    if (getHashComandos().containsKey(comando)) {
+      System.out.print("Contiene \"" + comando + "\" ");
+      System.out.println(getHashComandos().get(comando).toString());
       return getHashComandos().get(comando);
+    }
     else {
       System.err.println(comando + " no es un comando en ListaComandos");
-      return new AccionScript("echo " + comando + " no es un comando");
+      return new AccionScript("nada"
+          + ConstructorListaComandosWindows.EXTENSION);
     }
   }
   
