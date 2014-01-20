@@ -10,14 +10,13 @@
 package es.ull.etsii.sistemasInteligentes.proyectoFinal;
 
 import java.awt.event.KeyEvent;
-import java.util.Vector;
 
 import es.ull.etsii.sistemasInteligentes.proyectoFinal.accion.AccionScript;
 import es.ull.etsii.sistemasInteligentes.proyectoFinal.accion.AccionTeclado;
 import es.ull.etsii.sistemasInteligentes.proyectoFinal.accion.AccionTerminarPrograma;
 import es.ull.etsii.sistemasInteligentes.proyectoFinal.accion.CombTeclas;
 
-public class ConstructorListaComandosWindows {
+public class ConstructorListaComandos {
 
   public static final String EXTENSION = ".bat";
 
@@ -212,13 +211,13 @@ public class ConstructorListaComandosWindows {
     // Ayuda de Chrome // TODO No funciona
     /*CombTeclas ayudaChrome = new CombTeclas();
     ayudaChrome.addKeyEvent(KeyEvent.VK_F1);
-    addALista("alluda", ayudaChrome, lista);*/
+    addALista("ayuda", ayudaChrome, lista);*/
     
     // Guardar como marcador
-    /*CombTeclas guardarMarcador = new CombTeclas();
+    CombTeclas guardarMarcador = new CombTeclas();
     guardarMarcador.addKeyEvent(KeyEvent.VK_CONTROL);
     guardarMarcador.addKeyEvent(KeyEvent.VK_D);
-    addALista("guardar como marcador", guardarMarcador, lista);*/
+    addALista("guardar como marcador", guardarMarcador, lista);
     
     // Pantalla completa
     /*CombTeclas pantallaCompleta = new CombTeclas();
@@ -237,18 +236,12 @@ public class ConstructorListaComandosWindows {
     reducir.addKeyEvent(KeyEvent.VK_MINUS);
     addALista("reducir", reducir, lista);*/
     
-    // Youtube
-    CombTeclas youtube = new CombTeclas();
-    youtube.addKeyEvent(KeyEvent.VK_CONTROL);
-    youtube.addKeyEvent(KeyEvent.VK_L);
+    // Buscar
+    CombTeclas buscar = new CombTeclas();
+    buscar.addKeyEvent(KeyEvent.VK_CONTROL);
+    buscar.addKeyEvent(KeyEvent.VK_L);
+    addALista("buscar", buscar, lista);
     
-    Vector<Integer> vectorKeyEvent = MetodosKeyEvent
-        .stringToVectorKeyEvent("youtube");
-    for (int i = 0; i < vectorKeyEvent.size(); i++) {
-      youtube.addKeyEvent(vectorKeyEvent.get(i));
-    }
-    //youtube.addKeyEvent(KeyEvent.VK_ENTER);
-    addALista("youtube", youtube, lista);
     return lista;
     // TODO
     // TODO Hacer un comando buscar "x" y hacer una nueva gramática que

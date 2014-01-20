@@ -23,6 +23,7 @@ public <sentence> =
 [<dato19>]
 [<dato20>]
 [<dato21>]
+[<dato22>]
 ;
  
 <dato0>=abrir chrome;
@@ -46,4 +47,5 @@ public <sentence> =
 <dato18>=recargar;
 <dato19>=terminar programa;
 <dato20>=herramientas para desarrolladores;
-<dato21>=youtube;
+<dato21>=buscar;
+<dato22>=guardar como marcador;

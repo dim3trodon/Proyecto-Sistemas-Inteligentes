@@ -33,7 +33,7 @@ public class ListaComandos {
     else {
       System.err.println(comando + " no es un comando en ListaComandos");
       return new AccionScript("nada"
-          + ConstructorListaComandosWindows.EXTENSION);
+          + ConstructorListaComandos.EXTENSION);
     }
   }
   

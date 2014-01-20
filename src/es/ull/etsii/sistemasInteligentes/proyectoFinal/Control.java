@@ -15,14 +15,17 @@ public class Control {
   private Escucha escucha;
   private ListaComandos listaComandos;
   private boolean chromeAbierto;
+  private boolean busquedaActiva;
   private int numeroVentanasAbiertas;
   
   public Control() {
     // Se le pasa a Escucha la referencia a Control para que Escucha pueda
     // llamar a Control
     setEscucha(new Escucha(this));
-    setListaComandos(ConstructorListaComandosWindows.crearListaComandos());
+    setListaComandos(ConstructorListaComandos.crearListaComandos());
     setNumeroVentanasAbiertas(0);
+    setChromeAbierto(false);
+    setBusquedaActiva(false);
   }
   
   public void iniciarEscucha() {
@@ -53,8 +56,20 @@ public class Control {
         reducirNumeroVentanasAbiertas();
         if(getNumeroVentanasAbiertas() <= 0)
           setChromeAbierto(false);
+      } else if(comando.matches("\\s*buscar\\s*")) {
+        pararEscucha();
+        // No se ha abierto una búsqueda
+        if(!isBusquedaActiva()) {
+          setEscucha(new Escucha(this, Escucha.GRAMATICA_BUSQUEDA));
+          setBusquedaActiva(true);
+        } else {
+          setEscucha(new Escucha(this));
+          setBusquedaActiva(false);
+        }
+        iniciarEscucha();
+      } else {
+        getListaComandos().buscar(comando).ejecutar();
       }
-      getListaComandos().buscar(comando).ejecutar();
     } else {
       if(!comando.matches("\\s*terminar\\s*programa\\s*"))
         System.err.println("Chrome no está abierto");
@@ -90,6 +105,14 @@ public class Control {
     this.chromeAbierto = chromeAbierto;
   }
   
+  private boolean isBusquedaActiva() {
+    return busquedaActiva;
+  }
+
+  private void setBusquedaActiva(boolean busquedaActiva) {
+    this.busquedaActiva = busquedaActiva;
+  }
+
   private void aumentarNumeroVentanasAbiertas() {
     setNumeroVentanasAbiertas(getNumeroVentanasAbiertas() + 1);
   }

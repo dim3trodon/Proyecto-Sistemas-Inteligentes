@@ -23,8 +23,9 @@ import javax.speech.recognition.ResultToken;
 import javax.speech.recognition.RuleGrammar;
 
 public class Escucha extends ResultAdapter {
-  
+
   public static final String GRAMATICA = "gramaticas/gramatica.txt";
+  public static final String GRAMATICA_BUSQUEDA = "gramaticas/gramaticaEscribir.txt";
   
   private Recognizer recognizer;
   private Control refControl;
@@ -37,6 +38,26 @@ public class Escucha extends ResultAdapter {
       setRecognizer(Central.createRecognizer(new EngineModeDesc(Locale.ROOT)));
       getRecognizer().allocate();
       FileReader grammar1 = new FileReader(GRAMATICA);
+      RuleGrammar rg = getRecognizer().loadJSGF(grammar1);
+      rg.setEnabled(true);
+      getRecognizer().addResultListener(this);
+    } catch (FileNotFoundException e) {
+      System.err.println("No se ha encontrado " + GRAMATICA + " en Escucha");
+    } catch (Exception e) {
+      System.err.println("Ha ocurrido un error en el constructor de Escucha");
+      e.printStackTrace();
+      System.exit(0);
+    }
+  }
+  
+  public Escucha(Control refControl, String gramatica) {
+    super();
+    setRefControl(refControl);
+    // main del ejemplo de JSapi
+    try {
+      setRecognizer(Central.createRecognizer(new EngineModeDesc(Locale.ROOT)));
+      getRecognizer().allocate();
+      FileReader grammar1 = new FileReader(gramatica);
       RuleGrammar rg = getRecognizer().loadJSGF(grammar1);
       rg.setEnabled(true);
       getRecognizer().addResultListener(this);
