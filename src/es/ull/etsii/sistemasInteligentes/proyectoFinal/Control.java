@@ -20,6 +20,7 @@ public class Control {
   private ListaComandos listaComandos;
   private boolean chromeAbierto;
   private int numeroVentanasAbiertas;
+  private int numeroTabsAbiertos;
   public static Interfaz interfaz;
   
   public Control(Interfaz interfaz) {
@@ -28,6 +29,7 @@ public class Control {
     setEscucha(new Escucha(this));
     setListaComandos(ConstructorListaComandos.crearListaComandos());
     setNumeroVentanasAbiertas(0);
+    setNumeroTabsAbiertos(0);
     setChromeAbierto(false);
     Control.interfaz = interfaz;
   }
@@ -41,7 +43,6 @@ public class Control {
   }
   
   public void ejecutarComando(String comando) {
-    // TODO
     // Llamar a la clase ListaComandos, donde se encuentran todos los comandos
     // que se pueden ejecutar en el programa, y ejecutar el método
     // buscar(String): Accion, que recibe un comando y devuelve una
@@ -49,10 +50,14 @@ public class Control {
     // de una combinación de teclas
     System.out.println("> " + comando);
     interfaz.actualizarTexto(comando);
-    if (comando.matches("\\s*abrir\\s*chrome\\s*") && (!isChromeAbierto())) {
-      setChromeAbierto(true);
-      aumentarNumeroVentanasAbiertas();
-      getListaComandos().buscar(comando).ejecutar();
+    if (comando.matches("\\s*abrir\\s*chrome\\s*")) {
+      if(!isChromeAbierto()) {
+        setChromeAbierto(true);
+        aumentarNumeroVentanasAbiertas();
+        getListaComandos().buscar(comando).ejecutar();
+      } else {
+        System.out.println("Chrome ya está abierto");
+      }
     } else if (isChromeAbierto()) {
       if (comando.matches("\\s*nueva\\s*ventana\\s*")) {
         aumentarNumeroVentanasAbiertas();
@@ -64,16 +69,26 @@ public class Control {
           setChromeAbierto(false);
         getListaComandos().buscar(comando).ejecutar();
         System.out.println(" > " + getNumeroVentanasAbiertas() + " ventanas");
+      } else if (comando.matches("\\s*nuevo\\s*tab\\s*")) {
+        aumentarNumeroTabsAbiertos();
+        getListaComandos().buscar(comando).ejecutar();
+        System.out.println(" > " + getNumeroTabsAbiertos() + " tabs");
+      } else if (comando.matches("\\s*cerrar\\s*tab\\s*")) {
+        reducirNumeroTabsAbiertos();
+        // TODO Mirar número de tabs abiertos en cada ventana
+        //if (getNumeroTabsAbiertos() <= 0)
+          //setChromeAbierto(false);
+        getListaComandos().buscar(comando).ejecutar();
+        System.out.println(" > " + getNumeroTabsAbiertos() + " tabs");
       } else if (comando.matches("\\s*entrar\\s*a\\s+.+")) {
         String[] palabras = comando.split("\\s+");
         getListaComandos().buscar("entrar a").ejecutar();
         ejecutarComando(palabras[palabras.length - 1]);
-      } else if(comando.matches("\\s*marcador\\s*\\d")) {
-        
+      } else if (comando.matches("\\s*marcador\\s*\\d")) {
         String[] palabras = comando.split("\\s+");
-          System.err.println("Marcador");
-          int numMarcador = Integer.parseInt(palabras[palabras.length - 1]) - 1;
-          getListaComandos().buscar("marcador").ejecutar();
+        System.err.println("Marcador");
+        int numMarcador = Integer.parseInt(palabras[palabras.length - 1]) - 1;
+        getListaComandos().buscar("marcador").ejecutar();
         Robot robot;
         try {
           robot = new Robot();
@@ -83,7 +98,6 @@ public class Control {
           }
           robot.keyPress(KeyEvent.VK_ENTER);
         } catch (AWTException e) {
-          // TODO Auto-generated catch block
           e.printStackTrace();
         }
       } else {
@@ -97,7 +111,6 @@ public class Control {
         getListaComandos().buscar(comando).ejecutar();
       }
     }
-    // iniciarEscucha();
   }
   
   private void setEscucha(Escucha escucha) {
@@ -138,6 +151,22 @@ public class Control {
 
   private void setNumeroVentanasAbiertas(int numeroVentanasAbiertas) {
     this.numeroVentanasAbiertas = numeroVentanasAbiertas;
+  }
+  
+  private void aumentarNumeroTabsAbiertos() {
+    setNumeroTabsAbiertos(getNumeroTabsAbiertos() + 1);
+  }
+  
+  private void reducirNumeroTabsAbiertos() {
+    setNumeroTabsAbiertos(getNumeroTabsAbiertos() - 1);
+  }
+
+  private int getNumeroTabsAbiertos() {
+    return numeroTabsAbiertos;
+  }
+
+  private void setNumeroTabsAbiertos(int numeroTabsAbiertos) {
+    this.numeroTabsAbiertos = numeroTabsAbiertos;
   }
 
 }

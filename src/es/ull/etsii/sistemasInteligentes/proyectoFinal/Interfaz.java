@@ -11,24 +11,29 @@ import javax.swing.JLabel;
 public class Interfaz extends JFrame {
 
   JLabel texto;
+  JButton play;
   boolean iniciado = false;
   
   public static final int ANCHO = 300;
-  public static final int ALTO = 80;
+  public static final int ALTO = 65;
+  public static final int TAMAÑO_TEXTO = 80;
 
   private static final long serialVersionUID = 5441369443454813377L;
 
   public Interfaz() {
-    JButton play = new JButton("Empezar");
+    play = new JButton("  Empezar  ");
     play.addActionListener(new ActionListener() {
 
       @Override
       public void actionPerformed(ActionEvent arg0) {
-        if (!iniciado)
-          iniciarControl();
+        actualizarTexto("Aquí aparecerá el comando");
+        iniciarControl();
+        play.setEnabled(false);
+        play.setText("Escuchando");
       }
     });
-    texto = new JLabel("Pulse empezar");
+    texto = new JLabel();
+    actualizarTexto("Pulse empezar");
     setLayout(new FlowLayout());
     add(play);
     add(texto);
@@ -47,13 +52,14 @@ public class Interfaz extends JFrame {
     Interfaz frame = new Interfaz();
     int anchoPantalla = (int)java.awt.Toolkit.getDefaultToolkit().getScreenSize().getWidth();
     int altoPantalla = (int)java.awt.Toolkit.getDefaultToolkit().getScreenSize().getHeight();
-    frame.setTitle("Reconocimiento del habla para Chrome");
+    frame.setTitle("Chrome voz");
     // frame.setLocationRelativeTo(null); // Center the frame
     frame.setLocation(anchoPantalla - ANCHO, altoPantalla - ALTO);
     frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
     frame.setSize(ANCHO, ALTO);
     frame.setVisible(true);
     frame.setAlwaysOnTop(true);
+    frame.setResizable(false);
   }
 
 }
