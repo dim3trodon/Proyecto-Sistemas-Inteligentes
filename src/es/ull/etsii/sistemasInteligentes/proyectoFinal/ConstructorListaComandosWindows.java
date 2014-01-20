@@ -10,9 +10,11 @@
 package es.ull.etsii.sistemasInteligentes.proyectoFinal;
 
 import java.awt.event.KeyEvent;
+import java.util.Vector;
 
 import es.ull.etsii.sistemasInteligentes.proyectoFinal.accion.AccionScript;
 import es.ull.etsii.sistemasInteligentes.proyectoFinal.accion.AccionTeclado;
+import es.ull.etsii.sistemasInteligentes.proyectoFinal.accion.AccionTerminarPrograma;
 import es.ull.etsii.sistemasInteligentes.proyectoFinal.accion.CombTeclas;
 
 public class ConstructorListaComandosWindows {
@@ -105,7 +107,7 @@ public class ConstructorListaComandosWindows {
     teclasIrAlTab8.addKeyEvent(KeyEvent.VK_8);
     addALista("ir al tab 8", teclasIrAlTab8, lista);
     
-    // Ir al tab 9
+    // Ir al última tab
     CombTeclas teclasIrAlUltimoTab = new CombTeclas();
     teclasIrAlUltimoTab.addKeyEvent(KeyEvent.VK_CONTROL);
     teclasIrAlUltimoTab.addKeyEvent(KeyEvent.VK_9);
@@ -167,14 +169,97 @@ public class ConstructorListaComandosWindows {
     configuracion.addKeyEvent(KeyEvent.VK_E);
     addALista("configuracion", configuracion, lista);
     
+    // Ocultar/mostrar marcadores
+    CombTeclas mostrarMarcadores = new CombTeclas();
+    mostrarMarcadores.addKeyEvent(KeyEvent.VK_CONTROL);
+    mostrarMarcadores.addKeyEvent(KeyEvent.VK_SHIFT);
+    mostrarMarcadores.addKeyEvent(KeyEvent.VK_B);
+    addALista("mostrar marcadores", mostrarMarcadores, lista);
+    addALista("ocultar marcadores", mostrarMarcadores, lista);
     
+    // Mostrar historial // TODO no funciona bien
+    CombTeclas historial = new CombTeclas();
+    historial.addKeyEvent(KeyEvent.VK_CONTROL);
+    historial.addKeyEvent(KeyEvent.VK_H);
+    addALista("mostrar historial", historial, lista);
     
+    // Mostrar descargas
+    CombTeclas descargas = new CombTeclas();
+    descargas.addKeyEvent(KeyEvent.VK_CONTROL);
+    descargas.addKeyEvent(KeyEvent.VK_J);
+    addALista("mostrar descargas", descargas, lista);
+    
+    // Recargar
+    CombTeclas recargar = new CombTeclas();
+    recargar.addKeyEvent(KeyEvent.VK_F5);
+    addALista("recargar", recargar, lista);
+    
+    // Escape (permite salir de algún diálogo)
+    /*CombTeclas escape = new CombTeclas();
+    escape.addKeyEvent(KeyEvent.VK_ESCAPE);
+    addALista("escape", escape, lista);*/
+    
+    // Terminar programa
+    lista.addEntrada("terminar programa", new AccionTerminarPrograma());
+    
+    // Herramientas para desarrolladores
+    CombTeclas herramientasDesarrolladores = new CombTeclas();
+    herramientasDesarrolladores.addKeyEvent(KeyEvent.VK_CONTROL);
+    herramientasDesarrolladores.addKeyEvent(KeyEvent.VK_SHIFT);
+    herramientasDesarrolladores.addKeyEvent(KeyEvent.VK_J);
+    addALista("herramientas para desarrolladores", herramientasDesarrolladores, lista);
+    
+    // Ayuda de Chrome // TODO No funciona
+    /*CombTeclas ayudaChrome = new CombTeclas();
+    ayudaChrome.addKeyEvent(KeyEvent.VK_F1);
+    addALista("alluda", ayudaChrome, lista);*/
+    
+    // Guardar como marcador
+    /*CombTeclas guardarMarcador = new CombTeclas();
+    guardarMarcador.addKeyEvent(KeyEvent.VK_CONTROL);
+    guardarMarcador.addKeyEvent(KeyEvent.VK_D);
+    addALista("guardar como marcador", guardarMarcador, lista);*/
+    
+    // Pantalla completa
+    /*CombTeclas pantallaCompleta = new CombTeclas();
+    pantallaCompleta.addKeyEvent(KeyEvent.VK_F11);
+    addALista("pantalla completa", pantallaCompleta, lista);*/
+    
+    // Aumentar
+    /*CombTeclas aumentar = new CombTeclas();
+    aumentar.addKeyEvent(KeyEvent.VK_CONTROL);
+    aumentar.addKeyEvent(KeyEvent.VK_PLUS);
+    addALista("aumentar", aumentar, lista);*/
+    
+    // Reducir
+    /*CombTeclas reducir = new CombTeclas();
+    reducir.addKeyEvent(KeyEvent.VK_CONTROL);
+    reducir.addKeyEvent(KeyEvent.VK_MINUS);
+    addALista("reducir", reducir, lista);*/
+    
+    // Youtube
+    CombTeclas youtube = new CombTeclas();
+    youtube.addKeyEvent(KeyEvent.VK_CONTROL);
+    youtube.addKeyEvent(KeyEvent.VK_L);
+    
+    Vector<Integer> vectorKeyEvent = MetodosKeyEvent
+        .stringToVectorKeyEvent("youtube");
+    for (int i = 0; i < vectorKeyEvent.size(); i++) {
+      youtube.addKeyEvent(vectorKeyEvent.get(i));
+    }
+    //youtube.addKeyEvent(KeyEvent.VK_ENTER);
+    addALista("youtube", youtube, lista);
     return lista;
+    // TODO
+    // TODO Hacer un comando buscar "x" y hacer una nueva gramática que
+    // reconozca "x"
   }
-
+  
   private static void addALista(String comando, CombTeclas combTeclas,
       ListaComandos lista) {
     lista.addEntrada(comando, new AccionTeclado(combTeclas));
   }
+  
+  
 
 }

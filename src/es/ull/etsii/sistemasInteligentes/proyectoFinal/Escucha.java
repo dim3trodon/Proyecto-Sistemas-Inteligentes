@@ -51,9 +51,8 @@ public class Escucha extends ResultAdapter {
 
   public void iniciar() {
     try {
-      System.out.println("Empieze Dictado");
+      System.out.println("Empiece Dictado");
       getRecognizer().commitChanges();
-
       getRecognizer().requestFocus();
       getRecognizer().resume();
     } catch (Exception e) {
@@ -82,8 +81,8 @@ public class Escucha extends ResultAdapter {
       //parar();
     } catch (Exception ex) {
       System.out
-          .println("Ha ocurrido algo inesperado en resultAccepted() de Escucha "
-              + ex);
+          .println("Ha ocurrido algo inesperado en resultAccepted() de Escucha");
+      ex.printStackTrace();
     }
   }
 

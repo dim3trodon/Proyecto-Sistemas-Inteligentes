@@ -17,8 +17,12 @@ public <sentence> =
 [<dato13>]
 [<dato14>]
 [<dato15>]
+[<dato16>]
 [<dato17>]
 [<dato18>]
+[<dato19>]
+[<dato20>]
+[<dato21>]
 ;
  
 <dato0>=abrir chrome;
@@ -29,13 +33,17 @@ public <sentence> =
 <dato5>=1 | 2 | 3 | 4 | 5 | 6 | 7 | 8;
 <dato6>=ir al tab;
 <dato7>=ir al ultimo tab;
-<dato8>=siguiente tab;
-<dato9>=tab siguiente;
-<dato10>=anterior tab;
-<dato11>=tab anterior;
-<dato12>=cerrar ventana;
-<dato13>=cerrar tab;
-<dato14>=retroceder;
-<dato15>=pagina siguiente;
-<dato17>=tab anterior;
-<dato18>=configuracion
+<dato8>=tab siguiente;
+<dato9>=tab anterior;
+<dato10>=cerrar ventana;
+<dato11>=cerrar tab;
+<dato12>=retroceder;
+<dato13>=pagina siguiente;
+<dato14>=configuracion;
+<dato15>=ocultar marcadores;
+<dato16>=mostrar historial;
+<dato17>=mostrar descargas;
+<dato18>=recargar;
+<dato19>=terminar programa;
+<dato20>=herramientas para desarrolladores;
+<dato21>=youtube;

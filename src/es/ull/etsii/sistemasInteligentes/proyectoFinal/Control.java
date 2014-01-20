@@ -22,7 +22,7 @@ public class Control {
     // llamar a Control
     setEscucha(new Escucha(this));
     setListaComandos(ConstructorListaComandosWindows.crearListaComandos());
-//    setChromeAbierto(true);
+    setNumeroVentanasAbiertas(0);
   }
   
   public void iniciarEscucha() {
@@ -43,6 +43,7 @@ public class Control {
     System.out.println("Ejecutar comando " + comando);
     if(comando.matches("\\s*abrir\\s*chrome\\s*") && (!isChromeAbierto())) {
       setChromeAbierto(true);
+      aumentarNumeroVentanasAbiertas();
       getListaComandos().buscar(comando).ejecutar();
     } else if(isChromeAbierto()) {
       if(comando.matches("\\s*nueva\\s*ventana\\s*")) {
@@ -55,9 +56,13 @@ public class Control {
       }
       getListaComandos().buscar(comando).ejecutar();
     } else {
-      System.err.println("Chrome no está abierto");
+      if(!comando.matches("\\s*terminar\\s*programa\\s*"))
+        System.err.println("Chrome no está abierto");
+      else {
+        System.out.println("Adiós");
+        getListaComandos().buscar(comando).ejecutar();
+      }
     }
-    
     iniciarEscucha();
   }
   
