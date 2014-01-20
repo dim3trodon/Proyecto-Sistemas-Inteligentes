@@ -72,7 +72,7 @@ public class Escucha extends ResultAdapter {
 
   public void iniciar() {
     try {
-      System.out.println("Empiece Dictado");
+      System.out.println("Diga su comando");
       getRecognizer().commitChanges();
       getRecognizer().requestFocus();
       getRecognizer().resume();

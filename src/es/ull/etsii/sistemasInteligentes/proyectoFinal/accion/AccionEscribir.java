@@ -12,6 +12,8 @@ public class AccionEscribir implements Accion {
   
   public AccionEscribir(String palabra) {
     setTeclas(new CombTeclas(MetodosKeyEvent.stringToVectorKeyEvent(palabra)));
+    getTeclas().addKeyEvent(KeyEvent.VK_CONTROL);
+    getTeclas().addKeyEvent(KeyEvent.VK_ENTER);
   }
 
   @Override
@@ -26,6 +28,10 @@ public class AccionEscribir implements Accion {
       robot.keyRelease(KeyEvent.VK_WINDOWS);
       for(int i = 0; i < getNumeroTeclas(); i++)
         robot.keyPress(getTecla(i));
+      robot.keyRelease(KeyEvent.VK_CONTROL);
+      robot.keyRelease(KeyEvent.VK_SHIFT);
+      robot.keyRelease(KeyEvent.VK_ALT);
+      robot.keyRelease(KeyEvent.VK_WINDOWS);
     } catch (AWTException e) {
       System.err.println("Error en robot de AccionEscribir");
       e.printStackTrace();

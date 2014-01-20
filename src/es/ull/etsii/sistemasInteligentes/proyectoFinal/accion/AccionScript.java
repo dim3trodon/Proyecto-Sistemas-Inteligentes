@@ -24,7 +24,6 @@ public class AccionScript implements Accion {
     // TODO Auto-generated method stub
     try {
       String comando = "scripts/" + getNombreScript();
-      System.out.println("En terminal " + comando);
       Runtime.getRuntime().exec(comando);
     } catch (IOException e) {
       System.err.println("Error al ejecutar \"" + getNombreScript()

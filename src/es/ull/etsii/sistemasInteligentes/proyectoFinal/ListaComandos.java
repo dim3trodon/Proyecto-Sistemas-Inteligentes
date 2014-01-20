@@ -26,8 +26,6 @@ public class ListaComandos {
   
   public Accion buscar(String comando) {
     if (getHashComandos().containsKey(comando)) {
-      System.out.print("Contiene \"" + comando + "\" ");
-      System.out.println(getHashComandos().get(comando).toString());
       return getHashComandos().get(comando);
     }
     else {

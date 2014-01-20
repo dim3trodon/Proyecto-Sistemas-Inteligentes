@@ -9,23 +9,27 @@
  */
 package es.ull.etsii.sistemasInteligentes.proyectoFinal;
 
+import java.awt.AWTException;
+import java.awt.Robot;
+import java.awt.event.KeyEvent;
+
 
 public class Control {
   
   private Escucha escucha;
   private ListaComandos listaComandos;
   private boolean chromeAbierto;
-  private boolean busquedaActiva;
   private int numeroVentanasAbiertas;
+  public static Interfaz interfaz;
   
-  public Control() {
+  public Control(Interfaz interfaz) {
     // Se le pasa a Escucha la referencia a Control para que Escucha pueda
     // llamar a Control
     setEscucha(new Escucha(this));
     setListaComandos(ConstructorListaComandos.crearListaComandos());
     setNumeroVentanasAbiertas(0);
     setChromeAbierto(false);
-    setBusquedaActiva(false);
+    Control.interfaz = interfaz;
   }
   
   public void iniciarEscucha() {
@@ -39,46 +43,61 @@ public class Control {
   public void ejecutarComando(String comando) {
     // TODO
     // Llamar a la clase ListaComandos, donde se encuentran todos los comandos
-    // que se pueden ejecutar en el programa, y ejecutar el método 
+    // que se pueden ejecutar en el programa, y ejecutar el método
     // buscar(String): Accion, que recibe un comando y devuelve una
-    // Accion que puede ser la ejecución de un script o 
+    // Accion que puede ser la ejecución de un script o
     // de una combinación de teclas
-    System.out.println("Ejecutar comando " + comando);
-    if(comando.matches("\\s*abrir\\s*chrome\\s*") && (!isChromeAbierto())) {
+    System.out.println("> " + comando);
+    interfaz.actualizarTexto(comando);
+    if (comando.matches("\\s*abrir\\s*chrome\\s*") && (!isChromeAbierto())) {
       setChromeAbierto(true);
       aumentarNumeroVentanasAbiertas();
       getListaComandos().buscar(comando).ejecutar();
-    } else if(isChromeAbierto()) {
-      if(comando.matches("\\s*nueva\\s*ventana\\s*")) {
+    } else if (isChromeAbierto()) {
+      if (comando.matches("\\s*nueva\\s*ventana\\s*")) {
         aumentarNumeroVentanasAbiertas();
-      }
-      else if(comando.matches("\\s*cerrar\\s*ventana\\s*")) {
+        getListaComandos().buscar(comando).ejecutar();
+        System.out.println(" > " + getNumeroVentanasAbiertas() + " ventanas");
+      } else if (comando.matches("\\s*cerrar\\s*ventana\\s*")) {
         reducirNumeroVentanasAbiertas();
-        if(getNumeroVentanasAbiertas() <= 0)
+        if (getNumeroVentanasAbiertas() <= 0)
           setChromeAbierto(false);
-      } else if(comando.matches("\\s*buscar\\s*")) {
-        pararEscucha();
-        // No se ha abierto una búsqueda
-        if(!isBusquedaActiva()) {
-          setEscucha(new Escucha(this, Escucha.GRAMATICA_BUSQUEDA));
-          setBusquedaActiva(true);
-        } else {
-          setEscucha(new Escucha(this));
-          setBusquedaActiva(false);
+        getListaComandos().buscar(comando).ejecutar();
+        System.out.println(" > " + getNumeroVentanasAbiertas() + " ventanas");
+      } else if (comando.matches("\\s*entrar\\s*a\\s+.+")) {
+        String[] palabras = comando.split("\\s+");
+        getListaComandos().buscar("entrar a").ejecutar();
+        ejecutarComando(palabras[palabras.length - 1]);
+      } else if(comando.matches("\\s*marcador\\s*\\d")) {
+        
+        String[] palabras = comando.split("\\s+");
+          System.err.println("Marcador");
+          int numMarcador = Integer.parseInt(palabras[palabras.length - 1]) - 1;
+          getListaComandos().buscar("marcador").ejecutar();
+        Robot robot;
+        try {
+          robot = new Robot();
+          robot.delay(100);
+          for (int i = 0; i < numMarcador; i++) {
+            robot.keyPress(KeyEvent.VK_RIGHT);
+          }
+          robot.keyPress(KeyEvent.VK_ENTER);
+        } catch (AWTException e) {
+          // TODO Auto-generated catch block
+          e.printStackTrace();
         }
-        iniciarEscucha();
       } else {
         getListaComandos().buscar(comando).ejecutar();
       }
     } else {
-      if(!comando.matches("\\s*terminar\\s*programa\\s*"))
+      if (!comando.matches("\\s*terminar\\s*programa\\s*"))
         System.err.println("Chrome no está abierto");
       else {
         System.out.println("Adiós");
         getListaComandos().buscar(comando).ejecutar();
       }
     }
-    iniciarEscucha();
+    // iniciarEscucha();
   }
   
   private void setEscucha(Escucha escucha) {
@@ -104,14 +123,6 @@ public class Control {
   private void setChromeAbierto(boolean chromeAbierto) {
     this.chromeAbierto = chromeAbierto;
   }
-  
-  private boolean isBusquedaActiva() {
-    return busquedaActiva;
-  }
-
-  private void setBusquedaActiva(boolean busquedaActiva) {
-    this.busquedaActiva = busquedaActiva;
-  }
 
   private void aumentarNumeroVentanasAbiertas() {
     setNumeroVentanasAbiertas(getNumeroVentanasAbiertas() + 1);
@@ -127,15 +138,6 @@ public class Control {
 
   private void setNumeroVentanasAbiertas(int numeroVentanasAbiertas) {
     this.numeroVentanasAbiertas = numeroVentanasAbiertas;
-  }
-
-  /**
-   * @param args
-   */
-  public static void main(String[] args) {
-    // TODO Auto-generated method stub
-    Control control = new Control();
-    control.iniciarEscucha();
   }
 
 }

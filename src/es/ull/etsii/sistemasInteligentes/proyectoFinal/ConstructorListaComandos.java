@@ -11,6 +11,7 @@ package es.ull.etsii.sistemasInteligentes.proyectoFinal;
 
 import java.awt.event.KeyEvent;
 
+import es.ull.etsii.sistemasInteligentes.proyectoFinal.accion.AccionEscribir;
 import es.ull.etsii.sistemasInteligentes.proyectoFinal.accion.AccionScript;
 import es.ull.etsii.sistemasInteligentes.proyectoFinal.accion.AccionTeclado;
 import es.ull.etsii.sistemasInteligentes.proyectoFinal.accion.AccionTerminarPrograma;
@@ -240,7 +241,31 @@ public class ConstructorListaComandos {
     CombTeclas buscar = new CombTeclas();
     buscar.addKeyEvent(KeyEvent.VK_CONTROL);
     buscar.addKeyEvent(KeyEvent.VK_L);
-    addALista("buscar", buscar, lista);
+    addALista("entrar a", buscar, lista);
+    
+    // Subir
+    CombTeclas subir = new CombTeclas();
+    subir.addKeyEvent(KeyEvent.VK_PAGE_UP);
+    addALista("subir", subir, lista);
+    
+    // Bajar
+    CombTeclas bajar = new CombTeclas();
+    bajar.addKeyEvent(KeyEvent.VK_PAGE_DOWN);
+    addALista("bajar", bajar, lista);
+    
+    // Ir al marcador
+    CombTeclas irMarcador = new CombTeclas();
+    irMarcador.addKeyEvent(KeyEvent.VK_F6);
+    addALista("marcador", irMarcador, lista);
+    
+    // Youtube
+    lista.addEntrada("youtube", new AccionEscribir("youtube"));
+    
+    // Amazon
+    lista.addEntrada("amazon", new AccionEscribir("amazon"));
+    
+    // Marca
+    lista.addEntrada("marca", new AccionEscribir("marca"));
     
     return lista;
     // TODO
